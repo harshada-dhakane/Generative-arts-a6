@@ -1,0 +1,160 @@
+
+
+/* body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #1d1919;
+}
+
+header {
+    background: #663d3d;
+    color: white;
+    padding: 2px;
+    font-size: 25px;
+    margin-top: 0px;
+}
+
+/* Common navigation styles 
+.side-nav {
+    position: fixed;
+    top: 60%;
+    transform: translateY(-50%);
+}
+
+.side-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.side-nav li {
+    margin: 10px 0;
+}
+
+/* Styling for left-side navigation (1-5) 
+.side-nav.left {
+    left: 20px;
+   
+}
+
+/* Styling for right-side navigation (6-10) 
+.side-nav.right {
+    right: 20px;
+}
+
+/* Links styling with hover effect 
+.side-nav a {
+    text-decoration: none;
+    background: #007BFF;
+    color: white;
+    padding: 12px 20px;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 18px;
+    /* transition-background : 0.3s, transform 0.2s; 
+}
+
+/* Hover effect 
+.side-nav a:hover {
+    background: red;
+    transform: scale(1.1);
+}
+ */
+
+
+
+
+
+
+
+
+
+
+
+ body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #1d1919;
+}
+
+header {
+    background: #663d3d;
+    color: white;
+    padding: 10px;
+    font-size: 25px;
+    margin-top: 0;
+}
+
+/* Common navigation styles */
+.side-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.side-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.side-nav li {
+    margin: 10px 0;
+}
+
+/* Styling for left-side navigation (1-5) */
+.side-nav.left {
+    left: 20px;
+}
+
+/* Styling for right-side navigation (6-10) */
+.side-nav.right {
+    right: 20px;
+}
+
+/* Links styling with hover effect */
+.side-nav a {
+    text-decoration: none;
+    background: #007BFF;
+    color: white;
+    padding: 12px 20px;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+/* Hover effect */
+.side-nav a:hover {
+    background: red;
+    transform: scale(1.1);
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .side-nav {
+        position: static;
+        text-align: center;
+        transform: none;
+        margin: 10px 0;
+    }
+
+    .side-nav ul {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .side-nav li {
+        margin: 0;
+    }
+
+    .side-nav a {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+}

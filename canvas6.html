@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow Field</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(100, 100, 100);
+    }
+
+    header {
+      background: #333;
+      color: rgb(192, 143, 143);
+      padding: 10px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    canvas {
+      background-color: #3a3838;
+      width: 90%;
+      height: auto;
+      max-width: 1200px;
+    }
+
+    .info {
+      margin-top: 20px;
+      color: white;
+    }
+
+    .side-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+    }
+
+    .side-nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .side-nav li {
+      margin: 10px 0;
+    }
+
+    .side-nav a {
+      text-decoration: none;
+      background: #007BFF;
+      color: white;
+      padding: 10px 16px;
+      display: inline-block;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .side-nav a:hover {
+      background: red;
+      transform: scale(1.1);
+    }
+
+    .side-nav.left {
+      left: 10px;
+    }
+
+    .side-nav.right {
+      right: 10px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .side-nav {
+        display: none;
+      }
+
+      canvas {
+        width: 95%;
+      }
+
+      .info {
+        font-size: 14px;
+        padding: 0 10px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      canvas {
+        width: 80%;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      canvas {
+        width: 70%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Generative Arts</h1>
+  </header>
+ <div class="container-fluid">
+        <div class="row">
+  <!-- Navigation -->
+  <nav class="side-nav left">
+    <ul>
+      <li><a href="canvas1.html">1</a></li>
+      <li><a href="canvas2.html">2</a></li>
+      <li><a href="canvas3.html">3</a></li>
+      <li><a href="canvas4.html">4</a></li>
+      <li><a href="canvas5.html">5</a></li>
+    </ul>
+  </nav>
+
+  <nav class="side-nav right">
+    <ul>
+      <li><a href="canvas6.html">6</a></li>
+      <li><a href="canvas7.html">7</a></li>
+      <li><a href="canvas8.html">8</a></li>
+      <li><a href="canvas9.html">9</a></li>
+      <li><a href="canvas10.html">10</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- Main Content -->
+  <div class="container">
+    <canvas id="canvas1"></canvas>
+    <div class="info">
+      <p>Click for generative art. Flow Field</p>
+    </div>
+  </div>
+</div></div>
+
+  <script>
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function start() {
+      ctx.fillStyle = '#fff';
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = Math.random() * 3 + 0.2;
+
+      class Particle {
+        constructor(canvas) {
+          this.canvas = canvas;
+          this.x = Math.floor(Math.random() * this.canvas.width);
+          this.y = Math.floor(Math.random() * this.canvas.height);
+          this.speedModifier = Math.random() * 3 - 1.5;
+          this.history = [{ x: this.x, y: this.y }];
+          this.maxLength = Math.floor(Math.random() * 550 + 50);
+          this.angle = 0;
+          this.timer = this.maxLength * 2;
+          this.colors = ['#75d5fd', '#b76cfd', '#ff2291', '#011ffd', '#e83500', '#ff1493', '#fff3f1', '#9d72ff'];
+          this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        }
+
+        draw(context) {
+          context.fillStyle = this.color;
+          context.fillRect(this.x, this.y, 2, 2);
+          context.strokeStyle = this.color;
+          context.beginPath();
+          context.moveTo(this.history[0].x, this.history[0].y);
+          for (let i = 0; i < this.history.length; i++) {
+            context.lineTo(this.history[i].x, this.history[i].y);
+          }
+          context.stroke();
+        }
+
+        update() {
+          this.timer--;
+          if (this.timer > 1) {
+            let x = Math.floor(this.x / this.canvas.cellSize);
+            let y = Math.floor(this.y / this.canvas.cellSize);
+            let index = y * this.canvas.cols + x;
+            this.angle = this.canvas.flowField[index];
+            this.x += Math.cos(this.angle) * 0.5 * this.speedModifier;
+            this.y += Math.sin(this.angle) * 0.5 * this.speedModifier;
+            this.history.push({ x: this.x, y: this.y });
+            if (this.history.length > this.maxLength) {
+              this.history.shift();
+            }
+          } else if (this.history.length > 1) {
+            this.history.shift();
+          } else {
+            this.reset();
+          }
+        }
+
+        reset() {
+          this.x = Math.floor(Math.random() * this.canvas.width);
+          this.y = Math.floor(Math.random() * this.canvas.height);
+          this.history = [{ x: this.x, y: this.y }];
+          this.timer = this.maxLength * 2;
+        }
+      }
+
+      class Effect {
+        constructor(canvas) {
+          this.canvas = canvas;
+          this.width = this.canvas.width;
+          this.height = this.canvas.height;
+          this.particles = [];
+          this.numberOfParticles = 1440;
+          this.cellSize = 30;
+          this.rows;
+          this.cols;
+          this.flowField = [];
+          this.curve = Math.random() * 2 + 0.1;
+          this.zoom = Math.random() * 1 + 0.1;
+          this.init();
+        }
+
+        init() {
+          this.rows = Math.floor(this.height / this.cellSize);
+          this.cols = Math.floor(this.width / this.cellSize);
+          for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+              let angle = (Math.sin(y * this.zoom) + Math.cos(x * this.zoom)) * this.curve;
+              this.flowField.push(angle);
+            }
+          }
+          for (let i = 0; i < this.numberOfParticles; i++) {
+            this.particles.push(new Particle(this));
+          }
+        }
+
+        render(context) {
+          this.particles.forEach(p => {
+            p.draw(context);
+            p.update();
+          });
+        }
+      }
+
+      const effect = new Effect(canvas);
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        effect.render(ctx);
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+
+    window.addEventListener('click', start);
+  </script>
+</body>
+
+</html>

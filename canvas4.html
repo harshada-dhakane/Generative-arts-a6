@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spiral Sketch Effect 4</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: rgb(168, 162, 162);
+        }
+        canvas {
+            display: block;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(53, 49, 49);
+        }
+        header {
+            background: #333;
+            color: rgb(192, 143, 143);
+            padding: 0px;
+        }
+        /* Common navigation styles */
+        .side-nav {
+            position: fixed;
+            top: 60%;
+            transform: translateY(-50%);
+        }
+        .side-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        .side-nav li {
+            margin: 10px 0;
+        }
+        /* Styling for left-side navigation (1-5) */
+        .side-nav.left {
+            left: 20px;
+        }
+        /* Styling for right-side navigation (6-10) */
+        .side-nav.right {
+            right: 20px;
+        }
+        /* Links styling with hover effect */
+        .side-nav a {
+            text-decoration: none;
+            background: #007BFF;
+            color: white;
+            padding: 12px 20px;
+            display: inline-block;
+            border-radius: 5px;
+            font-size: 18px;
+            /* transition-background : 0.3s, transform 0.2s; */
+        }
+        /* Hover effect */
+        .side-nav a:hover {
+            background: red;
+            transform: scale(1.1);
+        }
+        /* Responsive Styling */
+        /* Mobile View */
+        @media (max-width: 480px) {
+            #spiralCanvas {
+                width: 90%;
+                height: 200px;
+                margin-left: 5%;
+                margin-right: 5%;
+                margin-top: 10%;
+            }
+            .side-nav {
+                position: static;
+                transform: none;
+            }
+            .side-nav.left {
+                left: 0;
+            }
+            .side-nav.right {
+                right: 0;
+            }
+            .side-nav a {
+                padding: 10px;
+                font-size: 16px;
+            }
+        }
+        /* Tablet View */
+        @media (min-width: 481px) and (max-width: 768px) {
+            #spiralCanvas {
+                width: 80%;
+                height: 300px;
+                margin-left: 10%;
+                margin-right: 10%;
+                margin-top: 10%;
+            }
+            .side-nav {
+                position: fixed;
+                top: 50%;
+            }
+            .side-nav a {
+                padding: 12px;
+                font-size: 18px;
+            }
+        }
+        /* Laptop View */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            #spiralCanvas {
+                width: 70%;
+                height: 400px;
+                margin-left: 15%;
+                margin-right: 15%;
+                margin-top: 10%;
+            }
+            .side-nav {
+                position: fixed;
+                top: 55%;
+            }
+            .side-nav a {
+                padding: 15px;
+                font-size: 20px;
+            }
+        }
+        /* Computer View */
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            #spiralCanvas {
+                width: 60%;
+                height: 500px;
+                margin-left: 20%;
+                margin-right: 20%;
+                margin-top: 10%;
+            }
+            .side-nav {
+                position: fixed;
+                top: 60%;
+            }
+            .side-nav a {
+                padding: 18px;
+                font-size: 22px;
+            }
+        }
+        /* Large Computer View */
+        @media (min-width: 1281px) {
+            #spiralCanvas {
+                width: 50%;
+                height: 600px;
+                margin-left: 25%;
+                margin-right: 25%;
+                margin-top: 10%;
+            }
+            .side-nav {
+                position: fixed;
+                top: 65%;
+            }
+            .side-nav a {
+                padding: 20px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <header>
+        <h1>Generative Arts </h1>
+    </header>
+
+  <div class="container-fluid">
+        <div class="row">
+    <!-- Left Navigation (1-5) -->
+    <nav class="side-nav left">
+        <ul>
+            <li><a href="canvas1.html">1</a></li>
+            <li><a href="canvas.html">2</a></li>
+            <li><a href="canvas3.html">3</a></li>
+            <li><a href="canvas4.html">4</a></li>
+            <li><a href="canvas5.html">5</a></li>
+        </ul>
+    </nav>
+
+    <!-- Right Navigation (6-10) -->
+    <nav class="side-nav right">
+        <ul>
+            <li><a href="canvas6.html">6</a></li>
+            <li><a href="canvas7.html">7</a></li>
+            <li><a href="canvas8.html">8</a></li>
+            <li><a href="canvas9.html">9</a></li>
+            <li><a href="canvas10.html" width="100">10</a></li>
+        </ul>
+    </nav>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div> <canvas id="spiralCanvas" style="margin-left: 20%; margin-right: 25%;  margin-top: 0%;
+    background-color:#181717;  height: 300px; width: 60%; padding-top: 3%;padding-bottom: 3%; margin-top: 4%;"></canvas></div>
+
+    <script>
+        const canvas = document.getElementById("spiralCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let centerX = canvas.width / 2;
+        let centerY = canvas.height / 2;
+        let numLines = 500; // (fine details)
+        let maxRadius = Math.min(centerX, centerY) * 0.9;
+        let currentLines = 0;
+        let speed = 7; // 7-8 sec 
+
+        function drawSpiral() {
+            if (currentLines >= numLines) return;
+
+            let i = currentLines;
+            let angle = i * 0.2;
+            let radius = maxRadius * (1 - i / numLines); // max to min counting 
+
+            let x1 = centerX + radius * Math.cos(angle);
+            let y1 = centerY + radius * Math.sin(angle);
+            let x2 = x1 + Math.cos(angle) * (10 - i / 50);
+            let y2 = y1 + Math.sin(angle) * (10 - i / 50);
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = "white"; // Fade for black line 
+            ctx.lineWidth = Math.max(2 - i / 300, 0.8); // Thick to thin line converting 
+            ctx.stroke();
+
+            currentLines += 1;
+            setTimeout(drawSpiral, speed);
+        }
+
+        drawSpiral();
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            centerX = canvas.width / 10;
+            centerY = canvas.height / 10;
+            maxRadius = Math.min(centerX, centerY) * 0.9;
+        }); 
+    </script>
+</body>
+
+</html>

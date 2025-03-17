@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Arts using HTML CSS JS and Canvas</title>
+
+
+    <style>
+        /* #script { background-color: #31b931; width: 70%; } */
+        
+        #Spiral {
+            background-color: black;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(31, 29, 29);
+        }
+        
+        header {
+            background: #333;
+            color: rgb(192, 143, 143);
+            padding: 0px;
+        }
+        /* Common navigation styles */
+        
+        .side-nav {
+            position: fixed;
+            top: 60%;
+            transform: translateY(-50%);
+        }
+        
+        .side-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .side-nav li {
+            margin: 10px 0;
+        }
+        /* Styling for left-side navigation (1-5) */
+        
+        .side-nav.left {
+            left: 20px;
+        }
+        /* Styling for right-side navigation (6-10) */
+        
+        .side-nav.right {
+            right: 20px;
+        }
+        /* Links styling with hover effect */
+        
+        .side-nav a {
+            text-decoration: none;
+            background: #007BFF;
+            color: white;
+            padding: 12px 20px;
+            display: inline-block;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        /* Hover effect */
+        
+        .side-nav a:hover {
+            background: red;
+            transform: scale(1.1);
+        }
+        /* Media Queries */
+        
+        @media (max-width: 480px) {
+            .side-nav {
+                position: static;
+                transform: none;
+            }
+            .side-nav.left {
+                left: 0;
+            }
+            .side-nav.right {
+                right: 0;
+            }
+            #Spiral {
+                margin-left: 0;
+                margin-right: 0;
+                height: 200px;
+            }
+        }
+        
+        @media (min-width: 481px) and (max-width: 768px) {
+            .side-nav {
+                position: static;
+                transform: none;
+            }
+            .side-nav.left {
+                left: 0;
+            }
+            .side-nav.right {
+                right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Generative Arts </h1>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <!--- Left Navigation (1-5) --->
+            <nav class="side-nav left">
+                <ul>
+                    <li><a href="canvas1.html">1</a></li>
+                    <li><a href="canvas2.html">2</a></li>
+                    <li><a href="canvas3.html">3</a></li>
+                    <li><a href="canvas4.html">4</a></li>
+                    <li><a href="canvas5.html">5</a></li>
+                </ul>
+            </nav>
+
+            <!--- Right Navigation (6-10) --->
+            <nav class="side-nav right">
+                <ul>
+                    <li><a href="canvas6.html">6</a></li>
+                    <li><a href="canvas7.html">7</a></li>
+                    <li><a href="canvas8.html">8</a></li>
+                    <li><a href="canvas9.html">9</a></li>
+                    <li><a href="canvas10.html" width="100">10</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    </div>
+
+    <canvas id="Spiral" style="margin-left: 200px; margin-right: 20%;  margin-top: 8%;
+    background-color: #0c0c0f;height: 300px;"></canvas>
+
+    <script>
+        var canvas = document.getElementById('Spiral');
+        var context = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var i = 0;
+        context.font = "40px Georgia";
+        context.textAlign = 'center';
+        context.fillStyle = 'white';
+        context.strokeStyle = 'pink';
+
+        function draw(wid) {
+            context.moveTo(canvas.width / 2, canvas.height / 2);
+            var x = wid + r * Math.sin(i);
+            var y = canvas.height / 2 + r * Math.cos(i);
+            context.fillText('.', x, y);
+            context.lineTo(x, y);
+            context.stroke();
+        }
+
+        function timing() {
+            i = i + 0.1;
+            r = Math.pow(10000 * Math.cos(2 * i), 0.6);
+            context.beginPath();
+
+            draw(canvas.width / 4);
+            draw(canvas.width / 1);
+            draw(canvas.width * 1 / 4);
+
+            if (i < 34) {
+                window.setTimeout('timing()', 25);
+            }
+
+        }
+        timing();
+    </script>
+</body>
+
+</html>

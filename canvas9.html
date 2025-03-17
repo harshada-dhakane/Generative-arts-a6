@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style>
+        #canvas {
+            width: 100%;
+            border: none;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(17, 15, 15);
+        }
+        
+        header {
+            background: #333;
+            color: rgb(184, 140, 140);
+            padding: 0px;
+        }
+        /* Common navigation styles */
+        
+        .side-nav {
+            position: fixed;
+            top: 60%;
+            transform: translateY(-50%);
+        }
+        
+        .side-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .side-nav li {
+            margin: 10px 0;
+        }
+        /* Styling for left-side navigation (1-5) */
+        
+        .side-nav.left {
+            left: 20px;
+        }
+        /* Styling for right-side navigation (6-10) */
+        
+        .side-nav.right {
+            right: 20px;
+        }
+        /* Links styling with hover effect */
+        
+        .side-nav a {
+            text-decoration: none;
+            background: #007BFF;
+            color: white;
+            padding: 12px 20px;
+            display: inline-block;
+            border-radius: 5px;
+            font-size: 18px;
+            /* transition-background : 0.3s, transform 0.2s; */
+        }
+        /* Hover effect */
+        
+        .side-nav a:hover {
+            background: red;
+            transform: scale(1.1);
+        }
+
+    /* Responsive Design */
+
+    @media screen and (max-width: 768px) {
+      .side-nav {
+        display: none;
+      }
+
+      canvas {
+        width: 95%;
+        margin: 20px auto;
+      }
+
+      header h1 {
+        font-size: 20px;
+      }
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+      canvas {
+        width: 90%;
+      }
+    }
+
+    @media screen and (min-width: 1025px) {
+      canvas {
+        width: 80%;
+      }
+    }
+    </style>
+</head>
+
+<body>
+
+
+
+
+    <header>
+        <h1>Generative Arts </h1>
+    </header>
+
+
+    <!-- Left Navigation (1-5) -->
+    <nav class="side-nav left">
+        <ul>
+            <li><a href="canvas1.html">1</a></li>
+            <li><a href="canvas2.html">2</a></li>
+            <li><a href="canvas3.html">3</a></li>
+            <li><a href="canvas4.html">4</a></li>
+            <li><a href="canvas5.html">5</a></li>
+        </ul>
+    </nav>
+
+    <!-- Right Navigation (6-10) -->
+    <nav class="side-nav right">
+        <ul>
+            <li><a href="canvas6.html">6</a></li>
+            <li><a href="canvas7.html">7</a></li>
+            <li><a href="canvas8.html">8</a></li>
+            <li><a href="#">9</a></li>
+            <li><a href="canvas10.html" width="100">10</a></li>
+        </ul>
+    </nav>
+
+    <canvas id="canvas" style="margin-left: 18%; margin-right: 18%;  margin-top: 0%;
+    background-color:#a39c9c;  height: 300px; width: 58%;  margin-top: 7%;"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas dimensions
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Define shape properties
+        const shapes = [];
+        for (let i = 0; i < 100; i++) {
+            shapes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: Math.random() * 2 - 1,
+                vy: Math.random() * 2 - 1,
+                radius: Math.random() * 20 + 10,
+                color: 'hsl(${Math.random() * 360}, 000%, 70%)'
+            });
+        }
+
+        // Animate shapes
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const shape of shapes) {
+                ctx.beginPath();
+                ctx.arc(shape.x, shape.y, shape.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = shape.color;
+                ctx.fill();
+                shape.x += shape.vx;
+                shape.y += shape.vy;
+                if (shape.x + shape.radius > canvas.width || shape.x - shape.radius < 0) {
+                    shape.vx *= -1;
+                }
+                if (shape.y + shape.radius > canvas.height || shape.y - shape.radius < 0) {
+                    shape.vy *= -1;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+
+</html>
+

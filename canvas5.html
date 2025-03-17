@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generative Arts 5</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: rgb(31, 29, 29);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+    }
+
+    header {
+      background: #333;
+      color: rgb(192, 143, 143);
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+    }
+
+    #canvasContainer {
+      width: 90%;
+      max-width: 800px;
+      margin-top: 20px;
+      margin-left:300px ;
+    }
+
+    #inputContainer {
+      display: flex;
+      flex-direction: column;
+      background-color: rgb(167, 163, 163);
+      border-radius: 5px;
+      padding: 10px;
+      margin: 20px 0;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    #inputContainer > div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    input[type="number"] {
+      width: 80px;
+      height: 30px;
+      padding: 5px;
+      border-radius: 5px;
+      margin: 5px;
+      border: none;
+    }
+
+    label {
+      font-weight: bold;
+      margin: 5px;
+      color: #333;
+    }
+
+    button {
+      border: none;
+      background-color: rgb(252, 78, 25);
+      color: white;
+      width: 80px;
+      height: 40px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px;
+    }
+
+    .side-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .side-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .side-nav li {
+      margin: 10px 0;
+    }
+
+    .side-nav a {
+      text-decoration: none;
+      background: #007BFF;
+      color: white;
+      padding: 10px 15px;
+      display: inline-block;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .side-nav a:hover {
+      background: red;
+      transform: scale(1.1);
+    }
+
+    .side-nav.left {
+      left: 10px;
+    }
+
+    .side-nav.right {
+      right: 10px;
+    }
+
+    /* MEDIA QUERIES */
+
+    @media (max-width: 600px) {
+      /* Mobile */
+      .side-nav {
+        display: none;
+      }
+
+      #canvasContainer,
+      #inputContainer {
+        width: 95%;
+      }
+
+      input[type="number"] {
+        width: 100px;
+      }
+
+      button {
+        width: 70px;
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 601px) and (max-width: 1024px) {
+      /* Tablet */
+      #canvasContainer,
+      #inputContainer {
+        width: 85%;
+      }
+
+      .side-nav {
+        font-size: 14px;
+      }
+
+      .side-nav a {
+        padding: 10px;
+      }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      /* Laptop */
+      #canvasContainer,
+      #inputContainer {
+        width: 75%;
+      }
+    }
+
+    @media (min-width: 1441px) {
+      /* Desktop */
+      #canvasContainer,
+      #inputContainer {
+        width: 60%;
+      }
+
+      .side-nav a {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+        <h1>Generative Arts </h1>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+
+  <!-- Side Navigation -->
+  <nav class="side-nav left">
+    <ul>
+      <li><a href="canvas1.html">1</a></li>
+      <li><a href="canvas2.html">2</a></li>
+      <li><a href="canvas3.html">3</a></li>
+      <li><a href="canvas4.html">4</a></li>
+      <li><a href="canvas5.html">5</a></li>
+    </ul>
+  </nav>
+
+  <nav class="side-nav right">
+    <ul>
+      <li><a href="canvas6.html">6</a></li>
+      <li><a href="canvas7.html">7</a></li>
+      <li><a href="canvas8.html">8</a></li>
+      <li><a href="canvas9.html">9</a></li>
+      <li><a href="canvas10.html">10</a></li>
+    </ul>
+  </nav>
+</div></div>
+
+  <!-- Canvas -->
+  <div id="canvasContainer"></div>
+
+  <!-- Input Controls -->
+  <div id="inputContainer">
+    <div>
+      <label for="f1Input">f1:</label><input id="f1Input" type="number" />
+      <label for="f2Input">f2:</label><input id="f2Input" type="number" />
+      <label for="f3Input">f3:</label><input id="f3Input" type="number" />
+    </div>
+    <div>
+      <label for="r1Input">r1:</label><input id="r1Input" type="number" />
+      <label for="r2Input">r2:</label><input id="r2Input" type="number" />
+      <label for="r3Input">r3:</label><input id="r3Input" type="number" />
+    </div>
+    <div>
+      <button id="pausePlayButton">Play</button>
+      <button id="resetButton">Reset</button>
+      <button id="saveButton">Save</button>
+      <label for="speedInput">Speed:</label><input id="speedInput" type="number" />
+      <label for="radial">Radial:</label><input id="radial" type="checkbox" />
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    let t = 0;
+    let play = false;
+    let r1 = 50, r2 = 50, r3 = 50;
+    let f1 = 13, f2 = -7, f3 = -3;
+    let xprev = 0, yprev = 0;
+    let isRadial = false;
+    let speed = 1;
+    let myCanvas;
+
+    function setup() {
+      myCanvas = createCanvas(400, 250);
+      myCanvas.parent("canvasContainer");
+      background(200);
+      colorMode("HSB");
+    }
+
+    pausePlayButton.addEventListener("click", () => {
+      f1 = f1Input.value === "" ? f1 : parseFloat(f1Input.value);
+      f2 = f2Input.value === "" ? f2 : parseFloat(f2Input.value);
+      f3 = f3Input.value === "" ? f3 : parseFloat(f3Input.value);
+      r1 = r1Input.value === "" ? r1 : parseFloat(r1Input.value);
+      r2 = r2Input.value === "" ? r2 : parseFloat(r2Input.value);
+      r3 = r3Input.value === "" ? r3 : parseFloat(r3Input.value);
+      speed = speedInput.value === "" ? speed : parseFloat(speedInput.value);
+      f1Input.disabled = true;
+      f2Input.disabled = true;
+      f3Input.disabled = true;
+      r1Input.disabled = true;
+      r2Input.disabled = true;
+      r3Input.disabled = true;
+      speedInput.disabled = true;
+      radial.disabled = true;
+      isRadial = radial.checked;
+      play = !play;
+      pausePlayButton.textContent = play ? "Pause" : "Play";
+    });
+
+    resetButton.addEventListener("click", () => {
+      play = false;
+      f1Input.disabled = false;
+      f2Input.disabled = false;
+      f3Input.disabled = false;
+      r1Input.disabled = false;
+      r2Input.disabled = false;
+      r3Input.disabled = false;
+      speedInput.disabled = false;
+      radial.disabled = false;
+      pausePlayButton.textContent = "Play";
+      myCanvas.clear();
+      background(255);
+      xprev = 0;
+      yprev = 0;
+      t = 0;
+    });
+
+    saveButton.addEventListener("click", () => {
+      saveCanvas("myCanvas", "png");
+    });
+
+    function draw() {
+      if (!play) return;
+      translate(width / 2, height / 2);
+      let x = 0, y = 0;
+      let a = [r1, r2, r3];
+      let c_n = [f1 / 100, f2 / 100, f3 / 100];
+
+      for (let i = 0; i < 3; i++) {
+        x += a[i] * cos(c_n[i] * t);
+        y += a[i] * sin(c_n[i] * t);
+      }
+
+      stroke((1 * t) % 255, (2 * t) % 255, (4 * t) % 255);
+
+      if (!isRadial && (xprev !== 0 || yprev !== 0))
+        line(xprev, yprev, x, y);
+
+      if (isRadial)
+        line(0, 0, x, y);
+
+      xprev = x;
+      yprev = y;
+      t += speed;
+    }
+  </script>
+</body>
+</html>

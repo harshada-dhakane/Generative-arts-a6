@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Spiral using Canvas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+        }
+        
+        canvas {
+            max-width: 100%;
+            max-height: 100vh;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(78, 78, 78);
+        }
+        
+        header {
+            background: #0c0c0c;
+            color: rgb(158, 46, 46);
+            padding: 0px;
+            position: fixed;
+            margin-bottom: 610PX;
+        }
+        /* Common navigation styles */
+        
+        .side-nav {
+            position: fixed;
+            top: 60%;
+            transform: translateY(-50%);
+        }
+        
+        .side-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .side-nav li {
+            margin: 10px 0;
+        }
+        /* Styling for left-side navigation (1-5) */
+        
+        .side-nav.left {
+            left: 20px;
+        }
+        /* Styling for right-side navigation (6-10) */
+        
+        .side-nav.right {
+            right: 20px;
+        }
+        /* Links styling with hover effect */
+        
+        .side-nav a {
+            text-decoration: none;
+            background: #007BFF;
+            color: white;
+            padding: 12px 20px;
+            display: inline-block;
+            border-radius: 5px;
+            font-size: 18px;
+            /* transition-background : 0.3s, transform 0.2s; */
+        }
+        /* Hover effect */
+        
+        .side-nav a:hover {
+            background: red;
+            transform: scale(1.1);
+        }
+        
+        .heading {
+            background-color: rgb(43, 41, 41);
+            position: static;
+            padding-top: 0;
+        }
+        /* Media Queries */
+        
+        @media (max-width: 480px) {
+            .side-nav {
+                position: static;
+                transform: none;
+            }
+            .side-nav.left {
+                left: 0;
+            }
+            .side-nav.right {
+                right: 0;
+            }
+            #Spiral {
+                margin-left: 0;
+                margin-right: 0;
+                height: 200px;
+            }
+        }
+        
+        @media (min-width: 481px) and (max-width: 768px) {
+            .side-nav {
+                position: static;
+                transform: none;
+            }
+            .side-nav.left {
+                left: 0;
+            }
+            .side-nav.right {
+                right: 0;
+            }
+            #Spiral {
+                margin-left: 0;
+                margin-right: 0;
+                height: 300px;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .side-nav {
+                position: fixed;
+                top: 60%;
+                transform: translateY(-50%);
+            }
+            .side-nav.left {
+                left: 20px;
+            }
+            .side-nav.right {
+                right: 20px;
+            }
+            #Spiral {
+                margin-left: 0%;
+                margin-right: 20%;
+                margin-top: 8%;
+                height: 400px;
+            }
+        }
+        
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .side-nav {
+                position: fixed;
+                top: 60%;
+                transform: translateY(-50%);
+            }
+            .side-nav.left {
+                left: 20px;
+            }
+            .side-nav.right {
+                right: 20px;
+            }
+            #Spiral {
+                margin-left: 0%;
+                margin-right: 20%;
+                margin-top: 8%;
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Generative Arts </h1>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Left Navigation (1-5) -->
+            <nav class="side-nav left">
+                <ul>
+                    <li><a href="canvas1.html">1</a></li>
+                    <li><a href="canvas2.html">2</a></li>
+                    <li><a href="canvas3.html">3</a></li>
+                    <li><a href="canvas4.html">4</a></li>
+                    <li><a href="canvas5.html">5</a></li>
+                </ul>
+            </nav>
+
+            <!-- Right Navigation (6-10) -->
+            <nav class="side-nav right">
+                <ul>
+                    <li><a href="canvas6.html">6</a></li>
+                    <li><a href="canvas7.html">7</a></li>
+                    <li><a href="canvas8.html">8</a></li>
+                    <li><a href="canvas9.html">9</a></li>
+                    <li><a href="canvas10.html" width="100">10</a></li>
+                </ul>
+            </nav>
+
+
+
+
+
+
+
+            <div class="spiral1"> <canvas id="Spiral" style="margin-left: 0%; margin-right: 20%;  margin-top: 8%;
+    background-color: #0c0c0f;height: 300px;"></canvas></div>
+            <script>
+                var canvas = document.getElementById("Spiral");
+                var context = canvas.getContext('2d');
+
+                // Set canvas size
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                // Initial settings
+                var i = 0;
+                var angle;
+                var dotColor = '#fff';
+                var lineColor = '#0713f7';
+
+                // Draw the spiral
+                function drawSpiral() {
+                    i += 0.1; // Increment angle
+                    var r = 5 * i; // Radius increases with angle
+                    angle = 62.5; // Maximum angle
+
+                    // Clear the canvas
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.fillStyle = "black";
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // Draw the spiral
+                    context.beginPath();
+                    context.moveTo(canvas.width / 2, canvas.height / 2); // Start from the center
+
+                    for (var j = 0; j < i; j += 0.1) {
+                        var x = canvas.width / 2 + (5 * j) * Math.sin(j);
+                        var y = canvas.height / 2 + (5 * j) * Math.cos(j);
+
+                        // Draw dots
+                        context.fillStyle = dotColor;
+                        context.beginPath();
+                        context.arc(x, y, 2, 0, Math.PI * 2); // Draw a dot
+                        context.fill();
+
+                        // Draw lines
+                        context.strokeStyle = lineColor;
+                        context.lineTo(x, y);
+                        context.stroke();
+                    }
+
+                    // Continue animation until the maximum angle is reached
+                    if (i < angle) {
+                        requestAnimationFrame(drawSpiral);
+                    }
+                }
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    drawSpiral();
+                });
+
+                // Start the animation
+                drawSpiral();
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>
